@@ -1,0 +1,45 @@
+<title>温度读取</title>
+
+<script type=text/javascript src="{{url_for('static', filename='jquery.js') }}"></script>
+  
+<script type=text/javascript>
+var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type=text/javascript>
+setInterval("submit_form()" ,3000);
+function submit_form() {
+        $.getJSON($SCRIPT_ROOT + '/nowcenti', "",
+        function(data) {
+            $('#id').text(data.id);
+            $('#time').text(data.time);
+            $('#temperature').text(data.temperature);
+            $('#coordinate').text(data.coordinate);
+            now: new Date().getTime() 
+        });
+    };
+</script>
+
+<body style="margin-top: 30px; margin-left: 20px;">
+<div>
+<table border="1px"  bordercolor="#0066CC">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>传感器编号</th>
+            <th>读取时间</th>
+            <th>温度</th>
+            <th>传感器坐标</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="id">{{id}}</td>
+            <td id="time">{{time}}</td>
+            <td id="temperature">{{temperature}}</td>
+            <td id="coordinate">{{coordinate}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</body>
